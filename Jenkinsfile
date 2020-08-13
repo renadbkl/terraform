@@ -20,17 +20,6 @@ pipeline {
               sh 'make init'
           }
       }
-    stage("workspace") {
-          steps {
-              sh """
-terraform workspace select jenkins-lab-2
-if [[ \$? -ne 0 ]]; then
-  terraform workspace new jenkins-lab-2
-fi
-make init
-"""
-          }
-      }
       stage("plan") {
           steps {
               sh 'make plan'
@@ -47,5 +36,10 @@ make init
             sh 'cat ./ssh/id_rsa.pub'
         }
       }
+    stage("down"){
+        steps {
+            sh 'make down'
+        }
+    }
   }
 }
